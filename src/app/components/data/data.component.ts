@@ -13,10 +13,10 @@ export class DataComponent {
 
   user: Object = {
     fullname: {
-      name: "sarahi",
-      lastname: "molina"
+      nombre: "sarahi",
+      apellido: "molina"
     },
-    email: "spg@jomare.com"
+    correo: "spg@jomare.com"
   }
 
   constructor() { 
@@ -31,13 +31,22 @@ export class DataComponent {
       }),
       'correo': new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")])
     });
+
+    // this.forma.setValue(this.user); //Cargar por defecto
   }
 
   saveChanges(){
     console.log(this.forma.value);
-    console.log(this.forma)
+    console.log(this.forma);
+
+    //this.forma.reset(this.user) /Resetear formulario
+
+    this.forma.reset( {
+      fullname: {
+        nombre: "",
+        apellido: ""
+      },
+      correo: ""
+    })
   }
-
- 
-
 }
