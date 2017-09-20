@@ -28,18 +28,27 @@ export class DataComponent {
 
       'fullname': new FormGroup({
         'nombre': new FormControl('', [Validators.required, Validators.minLength(4)]),
-        'apellido': new FormControl('', Validators.required),
+        'apellido': new FormControl('', [
+                                        Validators.required,
+                                      this.noHerrera]),
       }),
       'correo': new FormControl('', [Validators.required,
          Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]),
      
          'pasatiempos': new FormArray([
         new FormControl('Boxeo', Validators.required)
-      ])   
+      ]),
+      'username': new FormControl('', Validators.required),            
+      'password1': new FormControl('', Validators.required),      
+      'password2': new FormControl()      
 
     });
 
     // this.forma.setValue(this.user); //Cargar por defecto
+
+    this.forma.controls['password2'].setValidators([
+      Validators.required, this.noIgual.bind(this.forma)
+    ])
   }
 
   addHobbie() {
@@ -48,18 +57,39 @@ export class DataComponent {
     )
   }
 
+  noHerrera(control: FormControl): {[s:string]:boolean} {
+    if(control.value === "herrera"){
+      return{
+        noherrera:true
+      }
+    }
+    return null;
+
+  }
+
+  noIgual(control: FormControl): {[s:string]:boolean} {
+    let forma:any = this;
+    if(control.value !== forma.controls['password1'].value ){
+      return{
+        noiguales:true
+      }
+    }
+    return null;
+
+  }
+
   saveChanges(){
     console.log(this.forma.value);
     console.log(this.forma);
 
     //this.forma.reset(this.user) /Resetear formulario
 
-    this.forma.reset( {
+    /*this.forma.reset( {
       fullname: {
         nombre: "",
         apellido: ""
       },
       correo: ""
-    })
+    })*/
   }
 }
