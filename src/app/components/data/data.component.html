@@ -67,9 +67,25 @@
   </div>
 
   <div class="form-group row">
+      <label for="" class="col-md-2 col-form-label">Sexo</label>
+      <div class="col-md-8" formArrayName="pasatiempos">
+        <input type="text" *ngFor="let hobbie of forma.get('pasatiempos').controls; let i = index;"
+        class="form-control"
+        [formControlName]="i">
+      </div>
+
+      <button 
+      (click)="addHobbie()"
+      type="button"
+      class="btn btn-primary">Nuevo</button>
+  </div>
+
+  
+
+  <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-8">
-      <button type="submit" class="btn btn-outline-primary">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="forma.invalid">
         Guardar
       </button>
     </div>

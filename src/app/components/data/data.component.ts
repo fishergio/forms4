@@ -1,6 +1,6 @@
 import { Validator } from 'codelyzer/walkerFactory/walkerFn';
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-data',
@@ -16,7 +16,8 @@ export class DataComponent {
       nombre: "sarahi",
       apellido: "molina"
     },
-    correo: "spg@jomare.com"
+    correo: "spg@jomare.com",
+    pasatiempos: ["Boxeo", "Ver series", "Gym"]
   }
 
   constructor() { 
@@ -29,10 +30,22 @@ export class DataComponent {
         'nombre': new FormControl('', [Validators.required, Validators.minLength(4)]),
         'apellido': new FormControl('', Validators.required),
       }),
-      'correo': new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")])
+      'correo': new FormControl('', [Validators.required,
+         Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]),
+     
+         'pasatiempos': new FormArray([
+        new FormControl('Boxeo', Validators.required)
+      ])   
+
     });
 
     // this.forma.setValue(this.user); //Cargar por defecto
+  }
+
+  addHobbie() {
+    (<FormArray>this.forma.controls['pasatiempos']).push(
+      new FormControl('', Validators.required)
+    )
   }
 
   saveChanges(){
